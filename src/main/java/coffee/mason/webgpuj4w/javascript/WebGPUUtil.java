@@ -17,6 +17,11 @@ public class WebGPUUtil {
 	private static boolean deviceCalled = false;
 
 	public static WebGPUDeviceJS getDevice() {
+		
+		if (!WebGPUInstance.isSupported()) {
+			return null;
+		}
+		
 		if (device == null && !deviceCalled) {
 			deviceCalled = true;
 			PromiseJS<AnyJS> promise = (PromiseJS) WebGPUUtil.getDevicePromise();
@@ -29,25 +34,6 @@ public class WebGPUUtil {
 			});
 		}
 		return device;
-	}
-
-	private static WebGPUAdapterJS adapter;
-	private static boolean adapterCalled = false;
-
-	public static WebGPUAdapterJS getAdapter() {
-		if (adapter == null && !adapterCalled) {
-			adapterCalled = true;
-			PromiseJS<AnyJS> promise = (PromiseJS) WebGPUUtil.getAdapterPromise();
-			promise.then(new FullfilledValueVoidCallback<AnyJS>() {
-
-				@Override
-				public void fullfilled(AnyJS value) {
-					adapter = (WebGPUAdapterJS) value;
-				}
-			});
-		}
-		return adapter;
-
 	}
 	
 	public static WebGPUClearValueJS BLACK;

@@ -6,6 +6,7 @@ import org.teavm.jso.JSBody;
 import org.teavm.jso.JSObject;
 import org.teavm.jso.core.JSArray;
 
+import coffee.mason.webgpuj4w.canvas.WebGPUCanvas;
 import coffee.mason.webgpuj4w.javascript.wrapper.WebGPUBuffer;
 import coffee.mason.webgpuj4w.javascript.wrapper.WebGPUConfiguration;
 import coffee.mason.webgpuj4w.javascript.wrapper.WebGPUShader;
@@ -20,6 +21,9 @@ public class WebGPUInstance {
 	private HashMap<String, AnyJS> dataBuffers = new HashMap<String, AnyJS>();
 
 	public WebGPUInstance(WebGPUConfiguration configuration) {
+		if (!WebGPUInstance.isSupported()) {
+			return;
+		}
 		WebGPUUtil.getDevice();
 
 		// Waiting for promise to finish
@@ -181,6 +185,25 @@ public class WebGPUInstance {
 
 	public AnyJS getBuffer(String name) {
 		return dataBuffers.get(name);
+	}
+
+
+	/*
+	 * Supported Check if webgpu is supported
+	 */
+
+	@JSBody(script = "return navigator.gpu;")
+	private static native boolean isGPUSupported(); // called only once ever
+
+	private static boolean supported;
+	private static boolean supportedCalled; // is supported called
+
+	public static boolean isSupported() {
+		if (!supportedCalled) {
+			WebGPUInstance.supported = isGPUSupported();
+			supportedCalled = true;
+		}
+		return supported;
 	}
 
 }

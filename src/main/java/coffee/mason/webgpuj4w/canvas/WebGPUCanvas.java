@@ -20,7 +20,7 @@ public abstract class WebGPUCanvas extends Canvas {
 	public WebGPUCanvas(boolean fullscreen, WebGPUInstance webgpu) {
 		super("webgpu", fullscreen);
 		this.webgpu = webgpu;
-		if (isSupported()) {
+		if (WebGPUInstance.isSupported()) {
 			loadBeforeAnimation();
 			updateCanvas(getCanvas());
 			
@@ -72,23 +72,5 @@ public abstract class WebGPUCanvas extends Canvas {
 	}
 
 	public abstract void onResize();
-
-	/*
-	 * Supported Check if webgpu is supported
-	 */
-
-	@JSBody(script = "return navigator.gpu;")
-	private static native boolean isGPUSupported(); // called only once ever
-
-	private static boolean supported;
-	private static boolean supportedCalled; // is supported called
-
-	public static boolean isSupported() {
-		if (!supportedCalled) {
-			WebGPUCanvas.supported = isGPUSupported();
-			supportedCalled = true;
-		}
-		return supported;
-	}
 
 }
