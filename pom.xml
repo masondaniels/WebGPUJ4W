@@ -15,6 +15,13 @@
 		</dependency>
 	</dependencies>
 
+	<distributionManagement>
+		<repository>
+			<id>mason-coffee</id>
+			<url>http://mason.coffee:13336/releases</url>
+		</repository>
+	</distributionManagement>
+
 	<properties>
 		<maven.compiler.release>11</maven.compiler.release>
 	</properties>
