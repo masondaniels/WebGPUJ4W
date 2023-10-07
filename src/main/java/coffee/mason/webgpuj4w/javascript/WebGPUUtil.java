@@ -7,9 +7,6 @@ import coffee.mason.webgpuj4w.javascript.PromiseJS.FullfilledValueVoidCallback;
 
 public class WebGPUUtil {
 
-	@JSBody(script = "async function getAdapter() {const adapter = await navigator.gpu.requestAdapter(); return adapter;} return getAdapter();")
-	public static native JSObject getAdapterPromise();
-
 	@JSBody(script = "async function getDevice() {const adapter = await navigator.gpu.requestAdapter(); const device = await adapter.requestDevice(); return device;} return getDevice();")
 	public static native JSObject getDevicePromise();
 
