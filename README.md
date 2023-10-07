@@ -1,5 +1,5 @@
 # WebGPUJ4W
-WebGPU bindings for Java using TeaVM.
+WebGPU library/bindings for Java using TeaVM.
 
 ## Todo
 Support for compute shader bindings.
